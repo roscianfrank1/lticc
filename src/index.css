@@ -1,0 +1,33 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Outfit:wght@400;500;600;700;800&display=swap');
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Outfit", sans-serif;
+
+  --color-brand-navy: #0A1931;
+  --color-brand-gold: #BC9C56;
+  --color-brand-red: #E11D48;
+  --color-brand-green: #10B981;
+}
+
+@layer base {
+  body {
+    @apply font-sans text-brand-navy bg-white;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-display text-brand-navy font-bold tracking-tight;
+  }
+}
+
+/* Custom Utilities */
+.wavy-bg {
+  mask-image: url("data:image/svg+xml,%3Csvg width='1440' height='320' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 160L48 176C96 192 192 224 288 224C384 224 480 192 576 165.3C672 139 768 117 864 122.7C960 128 1056 160 1152 165.3C1248 171 1344 149 1392 138.7L1440 128V0H1392C1344 0 1248 0 1152 0C1056 0 960 0 864 0C768 0 672 0 576 0C480 0 384 0 288 0C192 0 96 0 48 0H0V160Z' fill='%23000'/%3E%3C/svg%3E");
+  mask-size: cover;
+  mask-repeat: no-repeat;
+}
+
+.glass-card {
+  @apply bg-white/70 backdrop-blur-md border border-white/20;
+}
