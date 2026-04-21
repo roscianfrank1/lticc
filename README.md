@@ -9,6 +9,21 @@ A fully responsive, CMS-powered web application built for **Luton Town & Indians
 
 ---
 
+## 🚀 Deployment to GitHub Pages
+
+I have pre-configured this project for automatic deployment to GitHub Pages.
+
+### **How to Deploy:**
+1.  **Export to GitHub:** Click the **Settings** (gear icon) in the AI Studio sidebar and select **Export to GitHub**. Follow the prompts to create a new repository.
+2.  **Enable GitHub Actions:** 
+    *   Go to your new repository on GitHub.
+    *   Navigate to **Settings > Pages**.
+    *   Under **Build and deployment > Source**, ensure **GitHub Actions** is selected.
+3.  **Automatic Build:** I've added a `.github/workflows/deploy.yml` file. Every time you push code to the `main` branch, GitHub will automatically build the project and host it for you.
+4.  **Base URL:** I have set the `base` path to `./` in `vite.config.ts`, making it compatible with both custom domains and `username.github.io/repo-name/` subfolders.
+
+---
+
 ## 🛠 Tech Stack
 - **Frontend:** React 19 + TypeScript
 - **Styling:** Tailwind CSS 4.0 (using modern `@theme` variables)

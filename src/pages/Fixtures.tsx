@@ -6,6 +6,20 @@ import { getFixtures, getResults, type Fixture, type Result } from '@/src/servic
 
 const filters = ['All Teams', '1st XI', '2nd XI', 'Sunday XI', 'Youth Teams'];
 
+const mockFixtures: Fixture[] = [
+  { id: 'f1', team: '1st XI', opponent: 'St Albans CC', date: new Date(Date.now() + 86400000 * 5).toISOString(), venue: 'Wardown Park', status: 'Scheduled', type: 'Home' },
+  { id: 'f2', team: '2nd XI', opponent: 'Harpenden CC', date: new Date(Date.now() + 86400000 * 6).toISOString(), venue: 'Redbourn Lane', status: 'Scheduled', type: 'Away' },
+  { id: 'f3', team: 'Sunday XI', opponent: 'Luton Town CC', date: new Date(Date.now() + 86400000 * 12).toISOString(), venue: 'Wardown Park', status: 'Scheduled', type: 'Home' },
+  { id: 'f4', team: 'Youth Teams', opponent: 'Northamptonshire Academy', date: new Date(Date.now() + 86400000 * 14).toISOString(), venue: 'County Ground', status: 'Scheduled', type: 'Away' }
+];
+
+const mockResults: Result[] = [
+  { id: 'r1', team: '1st XI', opponent: 'Radlett CC', date: new Date(Date.now() - 86400000 * 2).toISOString(), outcome: 'Win', lticcScore: '245/6', opponentScore: '210/10', margin: 'won by 35 runs' },
+  { id: 'r2', team: '2nd XI', opponent: 'Welwyn Garden City', date: new Date(Date.now() - 86400000 * 3).toISOString(), outcome: 'Loss', lticcScore: '185/10', opponentScore: '188/4', margin: 'lost by 6 wickets' },
+  { id: 'r3', team: '1st XI', opponent: 'Potters Bar CC', date: new Date(Date.now() - 86400000 * 7).toISOString(), outcome: 'Win', lticcScore: '290/4', opponentScore: '150/10', margin: 'won by 140 runs' },
+  { id: 'r4', team: 'Sunday XI', opponent: 'Bedford CC', date: new Date(Date.now() - 86400000 * 8).toISOString(), outcome: 'Win', lticcScore: '212/5', opponentScore: '211/9', margin: 'won by 5 wickets' }
+];
+
 export default function Fixtures() {
   const [activeFilter, setActiveFilter] = useState('All Teams');
   const [fixtures, setFixtures] = useState<Fixture[]>([]);
@@ -16,10 +30,12 @@ export default function Fixtures() {
     const fetchData = async () => {
       try {
         const [f, r] = await Promise.all([getFixtures(), getResults()]);
-        setFixtures(f);
-        setResults(r);
+        setFixtures(f.length > 0 ? f : mockFixtures);
+        setResults(r.length > 0 ? r : mockResults);
       } catch (err) {
         console.error(err);
+        setFixtures(mockFixtures);
+        setResults(mockResults);
       } finally {
         setLoading(false);
       }

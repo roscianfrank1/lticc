@@ -57,9 +57,9 @@ export default function Membership() {
   return (
     <div className="bg-white">
       {/* Hero */}
-      <section className="relative py-24 overflow-hidden bg-brand-navy text-white">
+      <section className="relative py-32 overflow-hidden bg-brand-navy text-white">
         <div 
-          className="absolute inset-0 opacity-20"
+          className="absolute inset-0 opacity-40 mix-blend-overlay z-0"
           style={{
             backgroundImage: 'url("https://picsum.photos/seed/cricket-field/1920/1080")',
             backgroundSize: 'cover',
@@ -70,16 +70,16 @@ export default function Membership() {
           <motion.h1 
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-5xl md:text-7xl font-display font-extrabold mb-8 tracking-tighter"
+            className="text-5xl md:text-8xl font-display font-black mb-8 tracking-tighter drop-shadow-2xl"
           >
             JOIN THE <span className="text-brand-gold">LTICC FAMILY</span><br />
             AT WARDOWN PARK.
           </motion.h1>
-          <p className="text-xl text-white/70 max-w-2xl mx-auto font-light leading-relaxed mb-12">
+          <p className="text-xl md:text-2xl text-white max-w-2xl mx-auto font-medium leading-relaxed mb-12 drop-shadow-lg">
             Experience the spirit of cricket, community, and competition. 
             Choose the membership that fits your game.
           </p>
-          <button className="bg-white text-brand-navy px-10 py-4 rounded-full font-bold text-lg hover:bg-brand-gold transition-all duration-300 transform hover:scale-110">
+          <button className="bg-brand-gold text-brand-navy px-12 py-5 rounded-full font-black text-lg hover:bg-white transition-all duration-300 transform hover:scale-110 shadow-2xl">
             Explore Memberships
           </button>
         </div>

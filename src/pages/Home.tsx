@@ -6,13 +6,18 @@ import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { getResults, type Result } from '@/src/services/cmsService';
 
+const mockHomeResults: Result[] = [
+  { id: 'r1', team: '1st XI', opponent: 'Radlett CC', date: new Date(Date.now() - 86400000 * 2).toISOString(), outcome: 'Win', lticcScore: '245/6', opponentScore: '210/10', margin: 'won by 35 runs' },
+  { id: 'r2', team: '2nd XI', opponent: 'Welwyn Garden City', date: new Date(Date.now() - 86400000 * 3).toISOString(), outcome: 'Loss', lticcScore: '185/10', opponentScore: '188/4', margin: 'lost by 6 wickets' }
+];
+
 export default function Home() {
   const [results, setResults] = useState<Result[]>([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     getResults(2).then(res => {
-      setResults(res);
+      setResults(res.length > 0 ? res : mockHomeResults);
       setLoading(false);
     });
   }, []);
@@ -58,7 +63,7 @@ export default function Home() {
                     </div>
                     <Trophy className={res.outcome === 'Win' ? "text-brand-gold w-8 h-8" : "text-white/20 w-8 h-8"} />
                   </div>
-                  <p className="text-lg font-medium text-white/90 mb-2">
+                  <p className="text-lg font-bold text-white mb-2">
                     {res.lticcScore} vs {res.opponentScore}
                   </p>
                   <p className="text-brand-gold font-semibold uppercase tracking-widest text-xs">LTICC {res.margin}</p>
@@ -91,7 +96,7 @@ export default function Home() {
                 FOUNDED IN 1920,<br />
                 <span className="text-brand-gold">ESTABLISHED FOREVER.</span>
               </h2>
-              <div className="space-y-6 text-brand-navy/70 text-lg leading-relaxed">
+              <div className="space-y-6 text-brand-navy text-lg leading-relaxed font-medium">
                 <p>
                   LTICC has been a cornerstone of Luton's sporting community at Wardown Park for over a century. 
                   What started as a small group of enthusiasts has grown into one of the region's most successful and diverse cricket clubs.
@@ -101,9 +106,9 @@ export default function Home() {
                   and a dedicated ladies' program.
                 </p>
               </div>
-              <button className="mt-10 px-8 py-3 border-2 border-brand-navy rounded-full font-bold hover:bg-brand-navy hover:text-white transition-all duration-300">
+              <Link to="/membership" className="inline-block mt-10 px-8 py-3 border-2 border-brand-navy rounded-full font-bold hover:bg-brand-navy hover:text-white transition-all duration-300">
                 Learn our Story
-              </button>
+              </Link>
             </motion.div>
 
             {/* Visit Us */}
@@ -122,24 +127,34 @@ export default function Home() {
                         <MapPin className="w-6 h-6 text-brand-gold" />
                       </div>
                       <div>
-                        <p className="text-lg font-medium mb-1">Wardown Park</p>
-                        <p className="text-white/60">Old Bedford Road, Luton, LU2 7HA</p>
+                        <p className="text-xl font-display font-black mb-1 text-brand-gold uppercase tracking-tight">Wardown Park</p>
+                        <p className="text-white font-medium">Old Bedford Road, Luton, LU2 7HA</p>
                       </div>
                     </div>
                     
-                    <div className="h-64 bg-gray-200 rounded-3xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer">
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=Wardown+Park+Old+Bedford+Road+Luton+LU2+7HA"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="block h-64 bg-gray-200 rounded-3xl overflow-hidden grayscale hover:grayscale-0 transition-all duration-500 cursor-pointer"
+                    >
                       <img 
                         src="https://picsum.photos/seed/map/600/400" 
                         alt="Map location" 
                         className="w-full h-full object-cover"
                         referrerPolicy="no-referrer"
                       />
-                    </div>
+                    </a>
                     
-                    <button className="w-full py-4 bg-brand-gold text-brand-navy rounded-2xl font-bold flex items-center justify-center space-x-2 hover:bg-white transition-all duration-300">
+                    <a 
+                      href="https://www.google.com/maps/search/?api=1&query=Wardown+Park+Old+Bedford+Road+Luton+LU2+7HA"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full py-4 bg-brand-gold text-brand-navy rounded-2xl font-bold flex items-center justify-center space-x-2 hover:bg-white transition-all duration-300"
+                    >
                       <ExternalLink className="w-5 h-5" />
                       <span>Get Directions</span>
-                    </button>
+                    </a>
                   </div>
                 </div>
                 

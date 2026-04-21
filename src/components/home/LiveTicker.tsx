@@ -10,7 +10,7 @@ export default function LiveTicker() {
         </span>
         
         <motion.div 
-          className="flex space-x-12 text-sm font-medium text-brand-navy/80"
+          className="flex space-x-12 text-sm font-bold text-brand-navy"
           animate={{ x: [0, -100, 0] }}
           transition={{ duration: 30, repeat: Infinity, ease: "linear" }}
         >

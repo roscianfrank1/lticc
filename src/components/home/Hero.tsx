@@ -1,4 +1,5 @@
 import { motion } from 'motion/react';
+import { Link } from 'react-router-dom';
 
 export default function Hero() {
   return (
@@ -26,22 +27,22 @@ export default function Hero() {
           transition={{ duration: 0.8 }}
           className="max-w-2xl"
         >
-          <h1 className="text-6xl md:text-8xl font-display font-extrabold mb-6 leading-none tracking-tighter">
+          <h1 className="text-6xl md:text-8xl font-display font-extrabold mb-6 leading-none tracking-tighter drop-shadow-2xl">
             CRICKET <br />
             <span className="text-brand-gold">COMMUNITY</span> <br />
             & PRIDE.
           </h1>
-          <p className="text-xl text-white/80 mb-10 max-w-lg font-light leading-relaxed">
-            Welcome toWardown Park, where history meets the modern game. 
+          <p className="text-xl text-white mb-10 max-w-lg font-medium leading-relaxed drop-shadow-md">
+            Welcome to Wardown Park, where history meets the modern game. 
             Join Bedfordshire's most vibrant cricket family.
           </p>
           <div className="flex flex-wrap gap-4">
-            <button className="bg-brand-gold text-brand-navy px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-all duration-300 transform hover:scale-105">
+            <Link to="/fixtures" className="bg-brand-gold text-brand-navy px-8 py-4 rounded-full font-bold text-lg hover:bg-white transition-all duration-300 transform hover:scale-105">
               Fixtures & Results
-            </button>
-            <button className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all duration-300">
+            </Link>
+            <Link to="/membership" className="bg-white/10 backdrop-blur-md border border-white/20 text-white px-8 py-4 rounded-full font-bold text-lg hover:bg-white/20 transition-all duration-300">
               Our History
-            </button>
+            </Link>
           </div>
         </motion.div>
       </div>

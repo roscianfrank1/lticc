@@ -12,6 +12,7 @@ const navLinks = [
   { name: 'Fixtures & Results', href: '/fixtures' },
   { name: 'Teams', href: '/teams' },
   { name: 'Membership', href: '/membership' },
+  { name: 'News', href: '/news' },
   { name: 'Contact', href: '/contact' },
 ];
 
