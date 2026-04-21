@@ -1,14 +1,22 @@
 import Hero from '@/src/components/home/Hero';
 import LiveTicker from '@/src/components/home/LiveTicker';
-import { Trophy, ArrowRight, MapPin, ExternalLink } from 'lucide-react';
+import { Trophy, ArrowRight, MapPin, ExternalLink, Loader2 } from 'lucide-react';
 import { motion } from 'motion/react';
-
-const mockResults = [
-  { team: '1st XI', vs: 'Lutonians CC', result: 'Win', score: '210/7 (45) vs 205/9 (45)', subtitle: 'beat Lutonians CC by 5 runs' },
-  { team: '2nd XI', vs: 'St. Albans CC', result: 'Loss', score: '190/5 (40) vs 192/3 (38.2)', subtitle: 'lost to St. Albans CC by 7 wickets' },
-];
+import { useEffect, useState } from 'react';
+import { Link } from 'react-router-dom';
+import { getResults, type Result } from '@/src/services/cmsService';
 
 export default function Home() {
+  const [results, setResults] = useState<Result[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    getResults(2).then(res => {
+      setResults(res);
+      setLoading(false);
+    });
+  }, []);
+
   return (
     <div className="flex flex-col min-h-screen">
       <LiveTicker />
@@ -21,34 +29,44 @@ export default function Home() {
             <h2 className="text-3xl md:text-4xl font-display font-extrabold uppercase tracking-tight">
               Recent Results
             </h2>
-            <button className="flex items-center space-x-2 text-brand-gold font-bold hover:translate-x-2 transition-transform duration-300">
+            <Link to="/fixtures" className="flex items-center space-x-2 text-brand-gold font-bold hover:translate-x-2 transition-transform duration-300">
               <span>View All Results</span>
               <ArrowRight className="w-5 h-5" />
-            </button>
+            </Link>
           </div>
           
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {mockResults.map((res, i) => (
-              <motion.div
-                key={res.team}
-                initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true }}
-                className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors group cursor-pointer"
-              >
-                <div className="flex justify-between items-start mb-6">
-                  <div>
-                    <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-gold mb-2 block">
-                      {res.team}
-                    </span>
-                    <h3 className="text-2xl font-display font-bold">vs {res.vs}</h3>
+            {loading ? (
+              <div className="col-span-full flex justify-center py-10">
+                <Loader2 className="w-8 h-8 text-brand-gold animate-spin" />
+              </div>
+            ) : results.length > 0 ? (
+              results.map((res, i) => (
+                <motion.div
+                  key={res.id}
+                  initial={{ opacity: 0, x: i % 2 === 0 ? -20 : 20 }}
+                  whileInView={{ opacity: 1, x: 0 }}
+                  viewport={{ once: true }}
+                  className="bg-white/5 border border-white/10 p-8 rounded-3xl hover:bg-white/10 transition-colors group cursor-pointer"
+                >
+                  <div className="flex justify-between items-start mb-6">
+                    <div>
+                      <span className="text-[10px] uppercase tracking-[0.2em] font-bold text-brand-gold mb-2 block">
+                        {res.team}
+                      </span>
+                      <h3 className="text-2xl font-display font-bold">vs {res.opponent}</h3>
+                    </div>
+                    <Trophy className={res.outcome === 'Win' ? "text-brand-gold w-8 h-8" : "text-white/20 w-8 h-8"} />
                   </div>
-                  <Trophy className={res.result === 'Win' ? "text-brand-gold w-8 h-8" : "text-white/20 w-8 h-8"} />
-                </div>
-                <p className="text-lg font-medium text-white/90 mb-2">{res.score}</p>
-                <p className="text-brand-gold font-semibold">{res.subtitle}</p>
-              </motion.div>
-            ))}
+                  <p className="text-lg font-medium text-white/90 mb-2">
+                    {res.lticcScore} vs {res.opponentScore}
+                  </p>
+                  <p className="text-brand-gold font-semibold uppercase tracking-widest text-xs">LTICC {res.margin}</p>
+                </motion.div>
+              ))
+            ) : (
+              <p className="col-span-full text-center py-10 text-white/30 font-medium">No recent results found. Check back soon!</p>
+            )}
           </div>
         </div>
         

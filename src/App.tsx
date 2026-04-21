@@ -3,6 +3,9 @@ import Layout from '@/src/components/layout/Layout';
 import Home from '@/src/pages/Home';
 import Fixtures from '@/src/pages/Fixtures';
 import Membership from '@/src/pages/Membership';
+import AdminLogin from '@/src/pages/admin/Login';
+import AdminDashboard from '@/src/pages/admin/Dashboard';
+import AdminAuth from '@/src/components/admin/AdminAuth';
 
 // Placeholder pages for non-fail build
 const Teams = () => <div className="py-20 text-center font-display text-4xl">Teams Page Coming Soon</div>;
@@ -19,6 +22,17 @@ export default function App() {
           <Route path="teams" element={<Teams />} />
           <Route path="contact" element={<Contact />} />
         </Route>
+        
+        {/* Admin Routes */}
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route 
+          path="/admin/dashboard" 
+          element={
+            <AdminAuth>
+              <AdminDashboard />
+            </AdminAuth>
+          } 
+        />
       </Routes>
     </BrowserRouter>
   );

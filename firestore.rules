@@ -1,0 +1,66 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    // Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    // Common Helpers
+    function isSignedIn() { return request.auth != null; }
+    function isAdmin() { return isSignedIn() && request.auth.token.email == 'roscian.frank@ten10.com' && request.auth.token.email_verified == true; }
+    function isValidId(id) { return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$'); }
+
+    // Validation Helpers
+    function isValidFixture(data) {
+      return data.keys().hasAll(['team', 'opponent', 'date', 'venue', 'type', 'status']) &&
+             data.keys().size() == 6 &&
+             data.team is string && data.team.size() <= 64 &&
+             data.opponent is string && data.opponent.size() <= 64 &&
+             data.date is string && // Assuming ISO string for CMS simplicity in browser
+             data.venue is string && data.venue.size() <= 128 &&
+             data.type in ['Home', 'Away'] &&
+             data.status in ['Scheduled', 'Cancelled', 'Postponed'];
+    }
+
+    function isValidResult(data) {
+      return data.keys().hasAll(['team', 'opponent', 'date', 'lticcScore', 'opponentScore', 'outcome', 'margin']) &&
+             data.keys().size() == 7 &&
+             data.team is string && data.opponent is string &&
+             data.lticcScore is string && data.opponentScore is string &&
+             data.outcome in ['Win', 'Loss', 'Draw', 'Cancelled'] &&
+             data.margin is string;
+    }
+
+    // Fixtures
+    match /fixtures/{fixtureId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidFixture(request.resource.data) && isValidId(fixtureId);
+      allow update: if isAdmin() && isValidFixture(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // Results
+    match /results/{resultId} {
+      allow read: if true;
+      allow create: if isAdmin() && isValidResult(request.resource.data) && isValidId(resultId);
+      allow update: if isAdmin() && isValidResult(request.resource.data);
+      allow delete: if isAdmin();
+    }
+
+    // News
+    match /news/{postId} {
+      allow read: if true;
+      allow create: if isAdmin() && request.resource.data.title is string && isValidId(postId);
+      allow update: if isAdmin();
+      allow delete: if isAdmin();
+    }
+
+    // Club Info
+    match /club_info/{infoId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+  }
+}

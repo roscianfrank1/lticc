@@ -1,7 +1,11 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Menu, X, Trophy } from 'lucide-react';
+import { Menu, X, Trophy, Settings } from 'lucide-react';
 import { cn } from '@/src/lib/utils';
+import { auth } from '@/src/lib/firebase';
+import { onAuthStateChanged } from 'firebase/auth';
+
+const ADMIN_EMAIL = 'roscian.frank@ten10.com';
 
 const navLinks = [
   { name: 'Home', href: '/' },
@@ -13,14 +17,22 @@ const navLinks = [
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const [isAdmin, setIsAdmin] = useState(false);
   const location = useLocation();
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      setIsAdmin(user?.email === ADMIN_EMAIL);
+    });
+    return () => unsubscribe();
+  }, []);
 
   return (
     <nav className="sticky top-0 z-50 bg-brand-navy text-white border-b border-white/10">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           {/* Logo */}
-          <Link to="/" className="flex items-center space-x-3 group">
+          <Link to="/" className="flex items-center space-x-3 group text-white">
             <div className="bg-brand-gold p-2 rounded-lg transform group-hover:rotate-12 transition-transform duration-300">
               <Trophy className="w-8 h-8 text-brand-navy" />
             </div>
@@ -48,6 +60,17 @@ export default function Navbar() {
                 {link.name}
               </Link>
             ))}
+            
+            {isAdmin && (
+              <Link
+                to="/admin/dashboard"
+                className="flex items-center space-x-2 text-sm font-bold text-brand-gold bg-white/5 px-4 py-2 rounded-xl hover:bg-white/10 transition-all"
+              >
+                <Settings className="w-4 h-4" />
+                <span>Admin</span>
+              </Link>
+            )}
+
             <Link
               to="/membership"
               className="bg-brand-gold hover:bg-brand-gold/90 text-brand-navy px-6 py-2.5 rounded-full font-bold text-sm transition-all duration-300 transform hover:scale-105"

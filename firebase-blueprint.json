@@ -1,0 +1,74 @@
+{
+  "entities": {
+    "Fixture": {
+      "title": "Fixture",
+      "description": "An upcoming cricket match",
+      "type": "object",
+      "properties": {
+        "team": { "type": "string" },
+        "opponent": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "venue": { "type": "string" },
+        "type": { "type": "string", "enum": ["Home", "Away"] },
+        "status": { "type": "string", "enum": ["Scheduled", "Cancelled", "Postponed"] }
+      },
+      "required": ["team", "opponent", "date", "venue", "type", "status"]
+    },
+    "Result": {
+      "title": "Match Result",
+      "description": "The outcome of a completed match",
+      "type": "object",
+      "properties": {
+        "team": { "type": "string" },
+        "opponent": { "type": "string" },
+        "date": { "type": "string", "format": "date-time" },
+        "lticcScore": { "type": "string" },
+        "opponentScore": { "type": "string" },
+        "outcome": { "type": "string", "enum": ["Win", "Loss", "Draw", "Cancelled"] },
+        "margin": { "type": "string" }
+      },
+      "required": ["team", "opponent", "date", "lticcScore", "opponentScore", "outcome", "margin"]
+    },
+    "News": {
+      "title": "News Post",
+      "description": "Latest news and updates for the club",
+      "type": "object",
+      "properties": {
+        "title": { "type": "string" },
+        "content": { "type": "string" },
+        "publishedAt": { "type": "string", "format": "date-time" },
+        "imageUrl": { "type": "string" }
+      },
+      "required": ["title", "content", "publishedAt"]
+    },
+    "ClubInfo": {
+      "title": "Club Information",
+      "description": "General settings and club details",
+      "type": "object",
+      "properties": {
+        "history": { "type": "string" },
+        "address": { "type": "string" },
+        "email": { "type": "string" },
+        "phone": { "type": "string" }
+      }
+    }
+  },
+  "firestore": {
+    "fixtures": {
+      "schema": "Fixture",
+      "description": "Upcoming fixtures list"
+    },
+    "results": {
+      "schema": "Result",
+      "description": "Past match results"
+    },
+    "news": {
+      "schema": "News",
+      "description": "Latest club news"
+    },
+    "club_info": {
+      "schema": "ClubInfo",
+      "description": "Static club content"
+    }
+  }
+}
