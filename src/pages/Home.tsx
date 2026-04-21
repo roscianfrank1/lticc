@@ -98,12 +98,13 @@ export default function Home() {
               </h2>
               <div className="space-y-6 text-brand-navy text-lg leading-relaxed font-medium">
                 <p>
-                  LTICC has been a cornerstone of Luton's sporting community at Wardown Park for over a century. 
-                  What started as a small group of enthusiasts has grown into one of the region's most successful and diverse cricket clubs.
+                  Established in 1920, Luton Town & Indians Cricket Club (LTICC) stands as a proud beacon of cricketing excellence in the heart of Bedfordshire. 
+                  Based at the historic Wardown Park, our club represents a rich tapestry of cultures and generations, brought together by a shared love for the gentleman's game.
                 </p>
                 <p>
-                  We provide cricket for all ages and abilities, maintaining multiple senior squads, a thriving youth system, 
-                  and a dedicated ladies' program.
+                  As an ECB Clubmark accredited club, we are committed to providing a safe, inclusive, and high-performance environment. 
+                  From our top-tier senior competitive squads in the Hertfordshire Premier League to our flourishing Junior Academy, 
+                  we nurture talent at every level while maintaining the deep-rooted values of sportsmanship and community.
                 </p>
               </div>
               <Link to="/membership" className="inline-block mt-10 px-8 py-3 border-2 border-brand-navy rounded-full font-bold hover:bg-brand-navy hover:text-white transition-all duration-300">

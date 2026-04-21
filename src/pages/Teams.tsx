@@ -7,7 +7,7 @@ const teams = [
   {
     name: '1st XI',
     category: 'Senior Men',
-    description: 'Our flagship team competing at the highest level of regional cricket. A blend of experienced veterans and rising stars.',
+    description: 'Our flagship team competing in the Hertfordshire Premier League. A high-performance squad dedicated to elite regional cricket.',
     captain: 'Adam Smith',
     stats: { matches: 24, won: 18, points: 340 },
     color: 'border-brand-gold bg-brand-gold/5',
